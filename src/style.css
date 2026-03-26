@@ -1,0 +1,446 @@
+:root {
+  --bg-color: #0d1117;
+  --panel-bg: rgba(22, 27, 34, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-hover: #3182ce;
+  --accent-transparent: rgba(88, 166, 255, 0.15);
+  --success: #2ea043;
+  --danger: #f85149;
+  
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  /* Cool gradient background */
+  background: radial-gradient(circle at 15% 50%, rgba(20, 30, 48, 1), rgba(36, 59, 85, 0.5) 100%), #0d1117;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.top-nav {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: var(--border-color) 1px solid;
+  background: rgba(13, 17, 23, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  stroke: var(--accent);
+}
+
+.logo h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #58a6ff, #a371f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 12px;
+  background: rgba(48, 54, 61, 0.4);
+  padding: 4px;
+  border-radius: 8px;
+  border: var(--glass-border);
+}
+
+.pathway-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pathway-btn:hover {
+  color: var(--text);
+}
+
+.pathway-btn.active {
+  background: var(--panel-bg);
+  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Main Layout */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding: 24px;
+  gap: 24px;
+}
+
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar h2 {
+  padding: 24px 24px 16px;
+  font-size: 1.1rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.step-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: 12px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.step-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.step-item.active {
+  background: var(--accent-transparent);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.step-num {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--accent);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(88, 166, 255, 0.2);
+}
+
+.step-item.active .step-num {
+  background: var(--accent);
+  color: #fff;
+}
+
+.step-item .step-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Main Viewer */
+.pathway-viewer {
+  flex: 1;
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+}
+
+.molecule-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Step Details */
+.step-details {
+  padding: 40px;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-details > .step-name {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #fff, #8b949e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.step-description {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.reaction-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.reactants-area, .products-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.molecule-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.molecule-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border-color: rgba(88, 166, 255, 0.3);
+}
+
+.molecule-card canvas {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 16px;
+}
+
+.molecule-label {
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-align: center;
+  color: var(--text);
+  background: rgba(0,0,0,0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+
+.mol-plus {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-muted);
+}
+
+.arrow-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.enzyme-badge {
+  background: var(--accent-transparent);
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid rgba(88, 166, 255, 0.4);
+  margin-bottom: 5px;
+  text-align: center;
+  max-width: 200px;
+}
+
+.reaction-arrow-container {
+  position: relative;
+  width: 200px;
+  height: 80px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reaction-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.cofactor-text {
+  position: absolute;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.cofactor-text.in {
+  top: -5px;
+  left: 20px;
+}
+
+.cofactor-text.out {
+  bottom: -5px;
+  right: 20px;
+}
+
+/* Regulatory Panel */
+.regulatory-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.activators, .inhibitors {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  border-radius: 12px;
+  border-left: 4px solid var(--success);
+}
+
+.inhibitors {
+  border-left: 4px solid var(--danger);
+}
+
+.activators h3, .inhibitors h3 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activators h3::before {
+  content: "↑";
+  color: var(--success);
+  font-weight: bold;
+}
+
+.inhibitors h3::before {
+  content: "↓";
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.activators ul, .inhibitors ul {
+  list-style-type: none;
+}
+
+.activators li, .inhibitors li {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  margin-bottom: 8px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.activators li::before, .inhibitors li::before {
+  content: "•";
+  margin-right: 8px;
+  color: var(--text-muted);
+}
+
+.empty-msg {
+  color: var(--text-muted);
+  font-style: italic;
+  background: transparent !important;
+}
+
+/* Animations and polish */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

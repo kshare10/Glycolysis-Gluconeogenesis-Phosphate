@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Biochemical Pathways</title>
+    <!-- Google Fonts for sleek typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SmilesDrawer for molecule rendering -->
+    <script src="https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js"></script>
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <div id="app" class="app-container">
+      <header class="top-nav">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          <h1>Biochemical Pathways</h1>
+        </div>
+        <div class="nav-controls">
+          <label class="quiz-toggle-container">
+            <input type="checkbox" id="quiz-toggle">
+            <span class="quiz-toggle-label">Quiz Mode</span>
+          </label>
+          <div class="nav-divider"></div>
+          <button class="pathway-btn active" data-pathway="glycolysis">Glycolysis</button>
+          <button class="pathway-btn" data-pathway="gluconeogenesis">Gluconeogenesis</button>
+          <button class="pathway-btn" data-pathway="pentose_phosphate">Pentose Phosphate</button>
+        </div>
+      </header>
+
+      <main class="main-layout">
+        <aside class="sidebar glass-panel">
+          <h2 id="sidebar-title">Glycolysis Steps</h2>
+          
+          <div class="energy-dashboard" title="Net energy yield up to the selected step">
+            <div class="metric"><span class="metric-val" id="tally-atp">0</span><span class="metric-lbl">ATP</span></div>
+            <div class="metric"><span class="metric-val" id="tally-nadh">0</span><span class="metric-lbl">NADH</span></div>
+            <div class="metric"><span class="metric-val" id="tally-nadph">0</span><span class="metric-lbl">NADPH</span></div>
+          </div>
+
+          <ul id="step-list" class="step-list">
+            <!-- Steps populated dynamically -->
+          </ul>
+        </aside>
+
+        <section class="pathway-viewer glass-panel">
+          <div id="step-details" class="step-details hidden">
+            <h2 id="step-name" class="step-name">Hexokinase</h2>
+            <p id="step-desc" class="step-description">Converts glucose to glucose-6-phosphate.</p>
+
+            <div class="reaction-container">
+              <div class="reactants-area" id="reactants-area">
+                <!-- Canvases added here dynamically -->
+              </div>
+
+              <div class="arrow-area">
+                <div class="enzyme-badge" id="enzyme-badge">Hexokinase</div>
+                <div class="reaction-arrow-container">
+                  <div id="cofactors-in" class="cofactor-text in">ATP</div>
+                  <div id="cofactors-out" class="cofactor-text out">ADP + Pi</div>
+                  
+                  <svg class="reaction-svg" viewBox="0 0 200 80" preserveAspectRatio="none">
+                    <defs>
+                      <marker id="arrowhead" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                        <polygon points="0 0, 7 2.5, 0 5" fill="var(--text)" />
+                      </marker>
+                      <marker id="arrowhead-accent" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                        <polygon points="0 0, 7 2.5, 0 5" fill="var(--accent)" />
+                      </marker>
+                    </defs>
+                    <!-- Main straight reaction arrow -->
+                    <line x1="0" y1="40" x2="194" y2="40" stroke="var(--text)" stroke-width="2" marker-end="url(#arrowhead)" />
+                    
+                    <!-- Cofactor paths curving directly into/out of center -->
+                    <path id="path-in" d="M 40,5 Q 100,5 100,36" stroke="var(--accent)" fill="none" stroke-width="2" marker-end="url(#arrowhead-accent)"/>
+                    <path id="path-out" d="M 100,44 Q 100,75 160,75" stroke="var(--accent)" fill="none" stroke-width="2" marker-end="url(#arrowhead-accent)"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="products-area" id="products-area">
+                <!-- Canvases added here dynamically -->
+              </div>
+            </div>
+
+            <div id="clinical-note-container" class="clinical-note-container" style="display: none;">
+              <h3><span class="icon">⚕️</span> Clinical Relevance</h3>
+              <p id="clinical-note-text"></p>
+            </div>
+
+            <div class="regulatory-panel">
+              <div class="activators">
+                <h3>Activators</h3>
+                <ul id="activators-list"></ul>
+              </div>
+              <div class="inhibitors">
+                <h3>Inhibitors</h3>
+                <ul id="inhibitors-list"></ul>
+              </div>
+            </div>
+          </div>
+          
+          <div id="empty-state" class="empty-state">
+            <div class="molecule-icon">⚛️</div>
+            <h2>Select a step to view details</h2>
+            <p>Explore engines of life interactively.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
