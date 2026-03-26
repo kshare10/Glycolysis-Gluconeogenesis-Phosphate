@@ -30,6 +30,12 @@ function initApp() {
 }
 
 function setupNavigation() {
+  // Quiz Toggle
+  const quizCheckbox = document.getElementById('quiz-toggle');
+  quizCheckbox.addEventListener('change', (e) => {
+    document.body.classList.toggle('quiz-mode', e.target.checked);
+  });
+
   const buttons = document.querySelectorAll('.pathway-btn');
   buttons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -38,8 +44,15 @@ function setupNavigation() {
       currentPathwayId = e.target.dataset.pathway;
       renderSidebar(currentPathwayId);
       hideMainDetails();
+      resetEnergyDashboard();
     });
   });
+}
+
+function resetEnergyDashboard() {
+  document.getElementById('tally-atp').textContent = '0';
+  document.getElementById('tally-nadh').textContent = '0';
+  document.getElementById('tally-nadph').textContent = '0';
 }
 
 function renderSidebar(pathwayId) {
@@ -62,9 +75,23 @@ function renderSidebar(pathwayId) {
       document.querySelectorAll('.step-item').forEach(el => el.classList.remove('active'));
       li.classList.add('active');
       showStepDetails(step);
+      updateEnergyDashboard(pathway, index);
     });
     listEl.appendChild(li);
   });
+}
+
+function updateEnergyDashboard(pathway, selectedIndex) {
+  let atp = 0, nadh = 0, nadph = 0;
+  for (let i = 0; i <= selectedIndex; i++) {
+    const s = pathway.steps[i];
+    atp += s.deltaATP || 0;
+    nadh += s.deltaNADH || 0;
+    nadph += s.deltaNADPH || 0;
+  }
+  document.getElementById('tally-atp').textContent = atp > 0 ? `+${atp}` : atp;
+  document.getElementById('tally-nadh').textContent = nadh > 0 ? `+${nadh}` : nadh;
+  document.getElementById('tally-nadph').textContent = nadph > 0 ? `+${nadph}` : nadph;
 }
 
 function showStepDetails(step) {
@@ -109,22 +136,32 @@ function showStepDetails(step) {
 
   step.reactants.forEach((mol, idx) => {
     if (idx > 0) reactantsArea.insertAdjacentHTML('beforeend', '<span class="mol-plus">+</span>');
-    reactantsArea.appendChild(createMoleculeView(mol, `reactant-${idx}`));
+    reactantsArea.appendChild(createMoleculeView(mol, `reactant-${idx}`, 'reactant'));
   });
 
   step.products.forEach((mol, idx) => {
     if (idx > 0) productsArea.insertAdjacentHTML('beforeend', '<span class="mol-plus">+</span>');
-    productsArea.appendChild(createMoleculeView(mol, `product-${idx}`));
+    productsArea.appendChild(createMoleculeView(mol, `product-${idx}`, 'product'));
   });
+
+  // Clinical Notes
+  const clinicalNoteEl = document.getElementById('clinical-note-container');
+  const clinicalNoteText = document.getElementById('clinical-note-text');
+  if (step.clinicalNote) {
+    clinicalNoteText.textContent = step.clinicalNote;
+    clinicalNoteEl.style.display = 'block';
+  } else {
+    clinicalNoteEl.style.display = 'none';
+  }
 
   // Regulatory List
   updateList('activators-list', step.activators, 'No major activators');
   updateList('inhibitors-list', step.inhibitors, 'No major inhibitors');
 }
 
-function createMoleculeView(molecule, idPrefix) {
+function createMoleculeView(molecule, idPrefix, roleClass) {
   const container = document.createElement('div');
-  container.className = 'molecule-card';
+  container.className = `molecule-card ${roleClass}`;
   
   const canvas = document.createElement('canvas');
   canvas.id = `${idPrefix}-canvas`;

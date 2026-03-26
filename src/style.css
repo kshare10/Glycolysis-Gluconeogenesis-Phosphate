@@ -330,8 +330,8 @@ body {
 
 .reaction-arrow-container {
   position: relative;
-  width: 200px;
-  height: 80px;
+  width: 280px;
+  height: 100px;
   margin: 10px 0;
   display: flex;
   align-items: center;
@@ -357,13 +357,15 @@ body {
 }
 
 .cofactor-text.in {
-  top: -5px;
-  left: 20px;
+  top: 15px;
+  left: 50px;
+  transform: translate(-50%, -100%);
 }
 
 .cofactor-text.out {
-  bottom: -5px;
-  right: 20px;
+  top: 85px;
+  left: 230px;
+  transform: translate(-50%, 0%);
 }
 
 /* Regulatory Panel */
@@ -430,7 +432,100 @@ body {
   background: transparent !important;
 }
 
-/* Animations and polish */
+/* Phase 2: Educational Enhancements */
+
+/* Quiz Toggle */
+.quiz-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.quiz-toggle-container:hover {
+  color: var(--text);
+}
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-color);
+  margin: 0 4px;
+}
+
+/* Energy Dashboard */
+.energy-dashboard {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.metric-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.metric-lbl {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Clinical Notes */
+.clinical-note-container {
+  background: rgba(163, 113, 247, 0.1);
+  border: 1px solid rgba(163, 113, 247, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+.clinical-note-container h3 {
+  color: #a371f7;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.clinical-note-container p {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Quiz Mode Obfuscation */
+body.quiz-mode .molecule-card.product canvas,
+body.quiz-mode .molecule-card.product .molecule-label,
+body.quiz-mode .enzyme-badge,
+body.quiz-mode .step-name {
+  filter: blur(8px);
+  opacity: 0.7;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+body.quiz-mode .molecule-card.product:hover canvas,
+body.quiz-mode .molecule-card.product:hover .molecule-label,
+body.quiz-mode .molecule-card.product:active canvas,
+body.quiz-mode .molecule-card.product:active .molecule-label,
+body.quiz-mode .enzyme-badge:hover,
+body.quiz-mode .enzyme-badge:active,
+body.quiz-mode .step-name:hover,
+body.quiz-mode .step-name:active {
+  filter: blur(0px);
+  opacity: 1;
+}
+
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
 }
