@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initApp() {
   setupNavigation();
   renderSidebar(currentPathwayId);
+  hideMainDetails();
 }
 
 function setupNavigation() {
@@ -78,6 +79,22 @@ function renderSidebar(pathwayId) {
       updateEnergyDashboard(pathway, index);
     });
     listEl.appendChild(li);
+  });
+
+  // Fit text sizes for step names so "Phosphofructokinase-1" etc. don't get cut off on mobile
+  requestAnimationFrame(() => {
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll('.step-item .step-name').forEach(nameEl => {
+        let size = 0.85; // Match mobile default
+        nameEl.style.fontSize = size + 'rem';
+        
+        // Decrease font size until text fits entirely inside the constraints
+        while (nameEl.scrollWidth > nameEl.offsetWidth && size > 0.5) {
+          size -= 0.05;
+          nameEl.style.fontSize = size + 'rem';
+        }
+      });
+    }
   });
 }
 

@@ -154,6 +154,7 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid transparent;
+  overflow: hidden;
 }
 
 .step-item:hover {
@@ -205,6 +206,67 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 40px;
+  color: var(--text-muted);
+}
+
+.splash-content {
+  text-align: center;
+  max-width: 700px;
+  animation: fadeIn 0.5s ease;
+}
+
+.splash-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #58a6ff, #a371f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 50px;
+}
+
+.splash-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 30px 20px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(88, 166, 255, 0.4);
+  background: rgba(88, 166, 255, 0.03);
+}
+
+.feat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.feature-card h4 {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 0.85rem;
   color: var(--text-muted);
 }
 
@@ -251,30 +313,51 @@ body {
 .reaction-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 10px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
   margin-bottom: 50px;
   background: rgba(0, 0, 0, 0.2);
-  padding: 40px;
+  padding: 20px;
   border-radius: 12px;
   border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.reaction-container::-webkit-scrollbar {
+  display: none;
 }
 
 .reactants-area, .products-area {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 8px;
+  flex-wrap: nowrap;
   justify-content: center;
+  flex: 0 1 auto;
+  min-width: min-content;
+}
+
+.reactants-area {
+  margin-left: auto;
+}
+
+.products-area {
+  margin-right: auto;
 }
 
 .molecule-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 0 1 250px;
+  width: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -285,19 +368,25 @@ body {
 }
 
 .molecule-card canvas {
-  width: 250px;
-  height: 250px;
-  margin-bottom: 16px;
+  width: 100%;
+  min-width: 100px;
+  max-width: 250px;
+  aspect-ratio: 1;
+  height: auto;
+  margin-bottom: 12px;
 }
 
 .molecule-label {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: clamp(0.65rem, 2.5vw, 1.05rem);
   text-align: center;
   color: var(--text);
   background: rgba(0,0,0,0.3);
-  padding: 6px 16px;
-  border-radius: 20px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  word-wrap: break-word;
+  max-width: 100%;
+  line-height: 1.2;
 }
 
 .mol-plus {
@@ -312,26 +401,33 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 180px;
+  flex: 0 1 200px;
+  width: 100%;
+  min-width: 100px;
+  max-width: 200px;
+  padding: 0 10px;
 }
 
 .enzyme-badge {
   background: var(--accent-transparent);
   color: var(--accent);
-  padding: 6px 16px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
   border: 1px solid rgba(88, 166, 255, 0.4);
   margin-bottom: 5px;
   text-align: center;
-  max-width: 200px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .reaction-arrow-container {
   position: relative;
-  width: 280px;
-  height: 100px;
+  width: 100%;
+  aspect-ratio: 2.8;
   margin: 10px 0;
   display: flex;
   align-items: center;
@@ -349,7 +445,7 @@ body {
 
 .cofactor-text {
   position: absolute;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   font-weight: 500;
   white-space: nowrap;
@@ -357,14 +453,14 @@ body {
 }
 
 .cofactor-text.in {
-  top: 15px;
-  left: 50px;
+  top: 15%;
+  left: 18%;
   transform: translate(-50%, -100%);
 }
 
 .cofactor-text.out {
-  top: 85px;
-  left: 230px;
+  top: 85%;
+  left: 82%;
   transform: translate(-50%, 0%);
 }
 
@@ -539,3 +635,115 @@ body.quiz-mode .step-name:active {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  body, .app-container {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .top-nav {
+    height: auto;
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+  
+  .nav-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .main-layout {
+    flex-direction: column;
+    padding: 10px;
+    overflow-y: visible;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .sidebar h2 {
+    padding: 16px;
+  }
+
+  .step-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px 16px;
+    white-space: nowrap;
+    align-items: stretch;
+    scrollbar-width: none;
+  }
+  
+  .step-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .step-item {
+    flex-direction: column;
+    min-width: 130px;
+    max-width: 130px;
+    flex: 0 0 130px;
+    margin-right: 12px;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    text-align: center;
+  }
+
+  .step-item .step-num {
+    margin-bottom: 8px;
+  }
+
+  .step-item .step-name {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .pathway-viewer {
+    overflow-y: visible;
+  }
+
+  .splash-content {
+    padding: 20px 0;
+  }
+
+  .splash-title {
+    font-size: 2.2rem;
+  }
+
+  .splash-features {
+    grid-template-columns: 1fr;
+  }
+
+  .step-details {
+    padding: 20px 10px;
+  }
+
+  .step-details > .step-name {
+    font-size: 1.6rem;
+  }
+
+  .step-description {
+    margin-bottom: 24px;
+  }
+
+  .molecule-label {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+  }
+
+  .regulatory-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
